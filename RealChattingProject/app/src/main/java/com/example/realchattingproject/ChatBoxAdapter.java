@@ -1,19 +1,20 @@
 package com.example.realchattingproject;
 
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 
 public class ChatBoxAdapter  extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHolder> {
     private List<Message> MessageList;
+    private Realm realm;
 
     public  class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView nickname;
@@ -27,6 +28,15 @@ public class ChatBoxAdapter  extends RecyclerView.Adapter<ChatBoxAdapter.MyViewH
             message = (TextView) view.findViewById(R.id.message);
 
 
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    removeMessage(MessageList.get(getAdapterPosition()).getNickname());
+                    removeMessage(MessageList.get(getAdapterPosition()).getMessage());
+                    removeItemView(getAdapterPosition());
+                    return false;
+                }
+            });
 
 
 
@@ -43,6 +53,7 @@ public class ChatBoxAdapter  extends RecyclerView.Adapter<ChatBoxAdapter.MyViewH
     public int getItemCount() {
         return MessageList.size();
     }
+
     @Override
     public ChatBoxAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -55,7 +66,7 @@ public class ChatBoxAdapter  extends RecyclerView.Adapter<ChatBoxAdapter.MyViewH
 
     @Override
     public void onBindViewHolder(final ChatBoxAdapter.MyViewHolder holder, final int position) {
-        final Message m = MessageList.get(position);
+        Message m = MessageList.get(position);
         holder.nickname.setText(m.getNickname() +" : ");
 
         holder.message.setText(m.getMessage() );
@@ -66,5 +77,23 @@ public class ChatBoxAdapter  extends RecyclerView.Adapter<ChatBoxAdapter.MyViewH
     }
 
 
+    private void removeItemView(int position) {
+        MessageList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, MessageList.size());
+    }
+
+    // 데이터 삭제
+    private void removeMessage(String text) {
+        realm = Realm.getDefaultInstance();
+        final RealmResults<Message> results = realm.where(Message.class).equalTo("text",text).findAll();
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                results.deleteFromRealm(0);
+            }
+        });
+    }
 
 }

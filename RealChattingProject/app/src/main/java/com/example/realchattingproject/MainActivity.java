@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //call UI component  by id
         btn = (Button) findViewById(R.id.enterchat) ;
-        nickname = (EditText) findViewById(R.id.nickname);
+        nickname = (EditText) findViewById(R.id.nickname);  //  이름값을 받아옴
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

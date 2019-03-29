@@ -1,5 +1,6 @@
 package com.example.realchattingproject;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -18,8 +19,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 
 public class ChatBoxActivity extends AppCompatActivity {
@@ -30,6 +37,11 @@ public class ChatBoxActivity extends AppCompatActivity {
     public Button send ;
     //declare socket object
     private Socket socket;
+    private Realm realm;
+    private Message message_Main;
+
+    private String title;
+    private String formattedDate;
 
     public String Nickname ;
     @Override
@@ -42,8 +54,23 @@ public class ChatBoxActivity extends AppCompatActivity {
         // get the nickame of the user
         Nickname= (String)getIntent().getExtras().getString(MainActivity.NICKNAME);
         //connect you socket client to the server
+
+        // 내장 디비 연결 중..
+        Realm.init(this);
+        realm = Realm.getDefaultInstance();
+
+        RealmResults<Message> realmResults = realm.where(Message.class)
+                .findAllAsync();
+
+        for(Message message : realmResults) {
+            MessageList.add(new Message(message.getNickname() ,message.getMessage())); // 이부분 부터 ㄱㄱ
+
+            chatBoxAdapter = new ChatBoxAdapter(MessageList);
+            myRecylerView.setAdapter(chatBoxAdapter);
+        }
+
         try {
-            socket = IO.socket("http://10.20.20.64:3000");
+            socket = IO.socket("http://10.20.25.139:3000");
             socket.connect();
             socket.emit("join", Nickname);
         } catch (URISyntaxException e) {
@@ -64,8 +91,19 @@ public class ChatBoxActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //retrieve the nickname and the message content and fire the event messagedetection
-                if(!messagetxt.getText().toString().isEmpty()){
+                if(!messagetxt.getText().toString().isEmpty()){ // 메시지를 보낼 때
                     socket.emit("messagedetection",Nickname,messagetxt.getText().toString());
+
+                    Date c = Calendar.getInstance().getTime();
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    formattedDate = df.format(c);
+                    title = messagetxt.getText().toString();
+                    Intent add = new Intent();
+                    add.putExtra("title",title);
+                    add.putExtra("time",formattedDate);
+                    setResult(RESULT_OK,add);
+
+
 
                     messagetxt.setText(" ");
                 }
@@ -113,8 +151,57 @@ public class ChatBoxActivity extends AppCompatActivity {
                         try {
                             //extract data from fired event
 
+
+
+
+                            //String nicknameRecord = data.getString("senderNickname");
+                            //String messageRecord = data.getString("message");
+                            //String time = data.getString("time");
+                            //Toast.makeText(this,nicknameRecord + "," + time,Toast.LENGTH_SHORT).show(); 안되넹 ㅋ
+//
+//                            realm.beginTransaction();
+//                            message_Main = realm.createObject(Message.class);
+//                            message_Main.setNickname(nicknameRecord);
+//                            message_Main.setNickname(messageRecord);
+//
+//                            realm.commitTransaction();
+//
+//                            RealmResults<Message> realmResults = realm.where(Message.class)
+//                                    .equalTo("text",nicknameRecord)
+//                                    .findAllAsync();
+
+                            //MessageList.add(new Message(nicknameRecord, messageRecord));
+                            //chatBoxAdapter = new ChatBoxAdapter(MessageList);
+                            //myRecylerView.setAdapter(chatBoxAdapter);
+
+
+
+
+
+                                //  여기부분 어떻게든 싸워 보자 ㅠㅠ
+
+
+
+
+
                             String nickname = data.getString("senderNickname");
                             String message = data.getString("message");
+
+                            String time = data.getString("time");
+                            //Toast.makeText(this,nicknameRecord + "," + time,Toast.LENGTH_SHORT).show(); 안되넹 ㅋ
+
+
+                            realm.beginTransaction();
+                            message_Main = realm.createObject(Message.class);
+                            message_Main.setNickname(nickname);
+                            message_Main.setNickname(message);
+
+                            realm.commitTransaction();
+
+                            RealmResults<Message> realmResults = realm.where(Message.class)
+                                    .equalTo("text",nickname)
+                                    .findAllAsync();
+
 
                             // make instance of message
 
@@ -125,7 +212,7 @@ public class ChatBoxActivity extends AppCompatActivity {
 
                             MessageList.add(m);
 
-                            // add the new updated list to the dapter
+                            // add the new updated list to the dapter : 새로운 메시지를 수신할 때
                             chatBoxAdapter = new ChatBoxAdapter(MessageList);
 
                             // notify the adapter to update the recycler view
@@ -146,6 +233,9 @@ public class ChatBoxActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 
     @Override
     protected void onDestroy() {
