@@ -5,20 +5,12 @@ import io.realm.annotations.Required;
 
 public class Message extends RealmObject {
 
+    @Required
     private String nickname;
+    @Required
     private String message ;
 
-    @Override
-    public String toString() {
-        return "Memo{" +
-                "text='" + text + '\'' +
-                '}';
-    }
-
-    @Required
-    private String text;
-
-    public  Message(){ this.text = "아무값도 없습니다."; }
+    public Message(){ }
 
     public Message(String nickname, String message) {
         this.nickname = nickname;

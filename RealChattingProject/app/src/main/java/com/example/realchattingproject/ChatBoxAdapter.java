@@ -14,7 +14,6 @@ import io.realm.RealmResults;
 
 public class ChatBoxAdapter  extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHolder> {
     private List<Message> MessageList;
-    private Realm realm;
 
     public  class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView nickname;
@@ -27,25 +26,11 @@ public class ChatBoxAdapter  extends RecyclerView.Adapter<ChatBoxAdapter.MyViewH
             nickname = (TextView) view.findViewById(R.id.nickname);
             message = (TextView) view.findViewById(R.id.message);
 
-
-            view.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    removeMessage(MessageList.get(getAdapterPosition()).getNickname());
-                    removeMessage(MessageList.get(getAdapterPosition()).getMessage());
-                    removeItemView(getAdapterPosition());
-                    return false;
-                }
-            });
-
-
-
         }
     }
     public ChatBoxAdapter(List<Message>MessagesList) {
 
         this.MessageList = MessagesList;
-
 
     }
 
@@ -66,7 +51,7 @@ public class ChatBoxAdapter  extends RecyclerView.Adapter<ChatBoxAdapter.MyViewH
 
     @Override
     public void onBindViewHolder(final ChatBoxAdapter.MyViewHolder holder, final int position) {
-        Message m = MessageList.get(position);
+        final Message m = MessageList.get(position);
         holder.nickname.setText(m.getNickname() +" : ");
 
         holder.message.setText(m.getMessage() );
@@ -77,23 +62,5 @@ public class ChatBoxAdapter  extends RecyclerView.Adapter<ChatBoxAdapter.MyViewH
     }
 
 
-    private void removeItemView(int position) {
-        MessageList.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, MessageList.size());
-    }
-
-    // 데이터 삭제
-    private void removeMessage(String text) {
-        realm = Realm.getDefaultInstance();
-        final RealmResults<Message> results = realm.where(Message.class).equalTo("text",text).findAll();
-
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                results.deleteFromRealm(0);
-            }
-        });
-    }
 
 }

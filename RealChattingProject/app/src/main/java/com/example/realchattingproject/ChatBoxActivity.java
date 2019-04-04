@@ -1,6 +1,5 @@
 package com.example.realchattingproject;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.nkzawa.emitter.Emitter;
@@ -19,13 +19,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 
@@ -33,17 +31,19 @@ public class ChatBoxActivity extends AppCompatActivity {
     public RecyclerView myRecylerView ;
     public List<Message> MessageList ;
     public ChatBoxAdapter chatBoxAdapter;
-    public EditText messagetxt ;
-    public Button send ;
+    public  EditText messagetxt ;
+    public  Button send ;
+
+    public TextView textView;
+
     //declare socket object
     private Socket socket;
-    private Realm realm;
-    private Message message_Main;
-
-    private String title;
-    private String formattedDate;
+    //디비생성
+    Realm mRealm;
 
     public String Nickname ;
+
+    String recordName, recordMessage; // 저장할라고.. ㅎㅎ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,30 +53,33 @@ public class ChatBoxActivity extends AppCompatActivity {
         send = (Button)findViewById(R.id.send);
         // get the nickame of the user
         Nickname= (String)getIntent().getExtras().getString(MainActivity.NICKNAME);
+
+        textView = (TextView) findViewById(R.id.textView);
+
+        //디비 생성
+        Realm.init(getApplicationContext());
+
+        RealmConfiguration config =
+                new RealmConfiguration.Builder()
+                        .name("chatttRecord.db")
+                        .deleteRealmIfMigrationNeeded()
+                        .build();
+
+        Realm.setDefaultConfiguration(config);
+
+        mRealm = Realm.getDefaultInstance();
+
+
         //connect you socket client to the server
-
-        // 내장 디비 연결 중..
-        Realm.init(this);
-        realm = Realm.getDefaultInstance();
-
-        RealmResults<Message> realmResults = realm.where(Message.class)
-                .findAllAsync();
-
-        for(Message message : realmResults) {
-            MessageList.add(new Message(message.getNickname() ,message.getMessage())); // 이부분 부터 ㄱㄱ
-
-            chatBoxAdapter = new ChatBoxAdapter(MessageList);
-            myRecylerView.setAdapter(chatBoxAdapter);
-        }
-
         try {
-            socket = IO.socket("http://10.20.25.139:3000");
+            socket = IO.socket("http://10.20.25.150:3000");
             socket.connect();
             socket.emit("join", Nickname);
         } catch (URISyntaxException e) {
             e.printStackTrace();
 
         }
+
         //setting up recyler
         MessageList = new ArrayList<>();
         myRecylerView = (RecyclerView) findViewById(R.id.messagelist);
@@ -85,28 +88,18 @@ public class ChatBoxActivity extends AppCompatActivity {
         myRecylerView.setItemAnimator(new DefaultItemAnimator());
 
 
-
         // message send action
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //retrieve the nickname and the message content and fire the event messagedetection
-                if(!messagetxt.getText().toString().isEmpty()){ // 메시지를 보낼 때
+                if(!messagetxt.getText().toString().isEmpty()){
                     socket.emit("messagedetection",Nickname,messagetxt.getText().toString());
 
-                    Date c = Calendar.getInstance().getTime();
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    formattedDate = df.format(c);
-                    title = messagetxt.getText().toString();
-                    Intent add = new Intent();
-                    add.putExtra("title",title);
-                    add.putExtra("time",formattedDate);
-                    setResult(RESULT_OK,add);
-
-
-
                     messagetxt.setText(" ");
+
                 }
+//                addMessage();   //  이거 생명주기때문에 안될거 같은디...
 
 
             }
@@ -151,88 +144,111 @@ public class ChatBoxActivity extends AppCompatActivity {
                         try {
                             //extract data from fired event
 
-
-
-
-                            //String nicknameRecord = data.getString("senderNickname");
-                            //String messageRecord = data.getString("message");
-                            //String time = data.getString("time");
-                            //Toast.makeText(this,nicknameRecord + "," + time,Toast.LENGTH_SHORT).show(); 안되넹 ㅋ
-//
-//                            realm.beginTransaction();
-//                            message_Main = realm.createObject(Message.class);
-//                            message_Main.setNickname(nicknameRecord);
-//                            message_Main.setNickname(messageRecord);
-//
-//                            realm.commitTransaction();
-//
-//                            RealmResults<Message> realmResults = realm.where(Message.class)
-//                                    .equalTo("text",nicknameRecord)
-//                                    .findAllAsync();
-
-                            //MessageList.add(new Message(nicknameRecord, messageRecord));
-                            //chatBoxAdapter = new ChatBoxAdapter(MessageList);
-                            //myRecylerView.setAdapter(chatBoxAdapter);
-
-
-
-
-
-                                //  여기부분 어떻게든 싸워 보자 ㅠㅠ
-
-
-
-
-
                             String nickname = data.getString("senderNickname");
                             String message = data.getString("message");
 
-                            String time = data.getString("time");
-                            //Toast.makeText(this,nicknameRecord + "," + time,Toast.LENGTH_SHORT).show(); 안되넹 ㅋ
-
-
-                            realm.beginTransaction();
-                            message_Main = realm.createObject(Message.class);
-                            message_Main.setNickname(nickname);
-                            message_Main.setNickname(message);
-
-                            realm.commitTransaction();
-
-                            RealmResults<Message> realmResults = realm.where(Message.class)
-                                    .equalTo("text",nickname)
-                                    .findAllAsync();
-
+                            recordName = nickname;
+                            recordMessage = message;
 
                             // make instance of message
 
                             Message m = new Message(nickname,message);
 
 
-                            //add the message to the messageList
 
-                            MessageList.add(m);
-
-                            // add the new updated list to the dapter : 새로운 메시지를 수신할 때
-                            chatBoxAdapter = new ChatBoxAdapter(MessageList);
-
-                            // notify the adapter to update the recycler view
-
-                            chatBoxAdapter.notifyDataSetChanged();
-
-                            //set the adapter for the recycler view
-
-                            myRecylerView.setAdapter(chatBoxAdapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
 
+                        addMessage(); // 되나?..
                     }
                 });
             }
         });
+
+
+        // 처음 화면에 출력
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+
+                RealmResults<Message> results = realm.where(Message.class).findAll();
+                textView.setText("");
+                for (Message message : results) {
+//                    textView.append(message.getNickname() + " : " + message.getMessage() + "\n");
+
+
+                    //add the message to the messageList
+                    MessageList.add(message);
+
+                    // add the new updated list to the dapter
+                    chatBoxAdapter = new ChatBoxAdapter(MessageList);
+
+                    // notify the adapter to update the recycler view
+
+                    chatBoxAdapter.notifyDataSetChanged();
+
+                    //set the adapter for the recycler view
+
+                    myRecylerView.setAdapter(chatBoxAdapter);
+                }
+            }
+        });
+
+
     }
+
+    private void addMessage() { // 이놈 메시지 받았을때랑 보낼때 호출해야함 !!! 부터 하장 ㅋ
+
+        Realm realm = null;
+
+        realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+
+                if (!Nickname.isEmpty()) {
+                    Message message = new Message();
+                    message.setNickname(recordName);
+                    message.setMessage(recordMessage);
+
+                    realm.copyToRealm(message);
+                }
+            }
+        });
+
+        // 화면에 출력
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+
+                RealmResults<Message> results = realm.where(Message.class).findAll();
+                textView.setText("");
+                for (Message message : results) {
+//                    textView.append(message.getNickname() + " : " + message.getMessage() + "\n");
+
+
+                    //add the message to the messageList
+                    MessageList.add(message);
+
+                    // add the new updated list to the dapter
+                    chatBoxAdapter = new ChatBoxAdapter(MessageList);
+
+                    // notify the adapter to update the recycler view
+
+                    chatBoxAdapter.notifyDataSetChanged();
+
+                    //set the adapter for the recycler view
+
+                    myRecylerView.setAdapter(chatBoxAdapter);
+                }
+            }
+        });
+    }
+
+
 
 
 
