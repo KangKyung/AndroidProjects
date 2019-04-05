@@ -8,9 +8,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
-
 
 public class ChatBoxAdapter  extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHolder> {
     private List<Message> MessageList;

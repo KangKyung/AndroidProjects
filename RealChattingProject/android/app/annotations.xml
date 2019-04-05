@@ -1,0 +1,5 @@
+<root>
+    <item name='android.app.Activity android.content.Intent getParentActivityIntent()'>
+        <annotation name='java.lang.Deprecated' />
+    </item>
+</root>
