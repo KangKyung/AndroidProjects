@@ -43,6 +43,8 @@ public class ChatBoxActivity extends AppCompatActivity {
 
     public String Nickname ;
 
+    int threadTest = 0;
+
     String recordName, recordMessage; // 저장할라고.. ㅎㅎ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,7 @@ public class ChatBoxActivity extends AppCompatActivity {
 
         //connect you socket client to the server
         try {
-            socket = IO.socket("http://10.20.25.150:3000");
+            socket = IO.socket("http://10.20.15.3:3000");
             socket.connect();
             socket.emit("join", Nickname);
         } catch (URISyntaxException e) {
@@ -140,27 +142,28 @@ public class ChatBoxActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        JSONObject data = (JSONObject) args[0];
-                        try {
-                            //extract data from fired event
+                        if (threadTest == 0) {
+                            threadTest = 1;
 
-                            String nickname = data.getString("senderNickname");
-                            String message = data.getString("message");
+                            JSONObject data = (JSONObject) args[0];
+                            try {
+                                //extract data from fired event
 
-                            recordName = nickname;
-                            recordMessage = message;
+                                String nickname = data.getString("senderNickname");
+                                String message = data.getString("message");
 
-                            // make instance of message
+                                recordName = nickname;
+                                recordMessage = message;
 
-                            Message m = new Message(nickname,message);
+                                // make instance of message
+
+                                Message m = new Message(nickname, message);
 
 
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-
 
                         addMessage(); // 되나?..
                     }

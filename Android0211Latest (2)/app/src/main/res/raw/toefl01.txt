@@ -1,0 +1,10 @@
+﻿1	:	나이, 연령	:	age	:	now	:	day	:	cost	:	1	:	*age나이, 연령 *now지금	:	*day날짜, 요일 *cost비용(이 들다)	:	0
+2	:	~전에	:	ago	:	green	:	angry	:	difficult	:	1	:	*ago~전에 *green초록색	:	*angry성난,화난 *difficult어려운	:	0
+3	:	비행기	:	birthday	:	find	:	airplane	:	come	:	3	:	*birthday생일 *find찾다	:	*airplane *come오다	:	0
+4	:	공기, 공중	:	air	:	bag	:	cow	:	able	:	1	:	*air공기, 공중 *bag가방	:	*cow소 *able~할 수 있는	:	0
+5	:	공항, 비행장	:	hungry	:	airport	:	need	:	move	:	2	:	*hungry배고픈 *airport공항, 비행장	:	*need필요하다 *move이동하다	:	0
+6	:	오해하다	:	manner	:	electric	:	misunderstand	:	health	:	3	:	*manner방법, (~s)예절[예의] *electric전기의	:	*misunderstand오해하다 *health건강	:	0
+7	:	교육	:	education	:	please	:	drive	:	diving	:	1	:	*education교육 *please제발,기쁘게 하다	:	*drive운전하다 *diving잠수	:	0
+8	:	새벽	:	down	:	feed	:	noisy	:	dawn	:	4	:	*down아래의 *feed먹을 것을 주다	:	*noisy시끄러운,소음 *dawn새벽	:	0
+9	:	의자:	chair	:	desk	:	complete	:	rest	:	1	:	*chair의자 *desk책상	:	*complete완전한, 완성하다 *rest휴식(하다),나머지	:	0
+10	:	한계, 제한하다	:	limit	:	cat	:	rent	:	water	:	1	:	*limit한계, 제한하다 *cat고양이	:	*rent임차[임대]하다 *water물	:	0

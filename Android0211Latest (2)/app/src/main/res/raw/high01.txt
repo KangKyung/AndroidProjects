@@ -1,0 +1,10 @@
+﻿1	:	하나의	:	a	:	apple	:	fine	:	thank	:	1	:	*a하나의 *apple사과	:	*fine좋은 *thank감사하다	:	0
+2	:	~에 대하여, 대략~, 약~	:	banana	:	about	:	nose	:	eye	:	2	:	*banana바나나 *about~에 대하여, 대략~, 약~	:	*nose코 *eye눈	:	0
+3	:	~을 가로질러, ~을 건너서	:	melon	:	across	:	money	:	job	:	2	:	*melon멜론 *across~을 가로질러, ~을 건너서	:	*money돈 *job일,직업	:	0
+4	:	행동하다, 행동,행위	:	act	:	red	:	have	:	gray	:	1	:	*act행동하다, 행동, 행위 *red빨간색	:	*have가지다 *gray회색	:	0
+5	:	영화배우	:	actor	:	imagine	:	knee	:	ear	:	1	:	*actor영화배우 *imagine상상하다	:	*knee무릎 *ear귀	:	0
+6	:	조각	:	fun	:	mess	:	improve	:	piece	:	4	:	*fun재미,장난 *mess엉망, 혼란	:	*improve개선하다, 향상되다 *piece조각	:	0
+7	:	잘못, 서툴게, 몹시	:	mountain	:	gate	:	balance	:	badly	:	4	:	*mountain산	:	*balance균형(을 잡다) *badly잘못, 서툴게, 몹시	:	0
+8	:	아마	:	import	:	friend	:	increase	:	probably	:	4	:	*import수입(하다) *friend친구	:	*increase늘리다, 증가(하다) *probably아마	:	0
+9	:	얻다,이르다,되다	:	put	:	get	:	decorate	:	match	:	2	:	*put놓다 *get얻다,이르다,되다	:	*decorate꾸미다, 장식하다 *match시합,성냥,어울리다	:	0
+10	:	허락[허가]하다	:	desert	:	advertisement	:	permit	:	near	:	3	:	*desert사막 *advertisement광고	:	*permit허락[허가]하다 *near근처의5	:	0

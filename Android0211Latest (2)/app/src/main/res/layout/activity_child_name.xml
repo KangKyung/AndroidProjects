@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/childlogin"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_marginTop="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+
+        <EditText
+            android:id="@+id/edt_child_email"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="부모님의 이메일 계정을 입력해주세요"
+            android:textColorHint="#db685b"
+            android:inputType="textEmailAddress"
+            android:textColor="#db685b"
+            android:textSize="15sp"
+            />
+        <EditText
+            android:id="@+id/edt_child_name"
+            android:layout_width="300sp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="70dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="center"
+            android:textColorHint="#db685b"
+            android:textColor="#db685b"
+            android:hint="등록한 자녀의 이름을 입력해주세요"
+            android:inputType="text"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_child_login"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@drawable/coner"
+            android:text="시작하기"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/childmain">
+
+    <TextView
+        android:id="@+id/txtRemain2"
+        android:layout_width="95dp"
+        android:layout_height="57dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="316dp"
+        android:layout_marginBottom="8dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#db685b"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.697" />
+
+    <TextView
+        android:id="@+id/txt2"
+        android:layout_width="254dp"
+        android:layout_height="42dp"
+
+
+        android:layout_alignStart="@+id/txtRemain2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="536dp"
+        android:layout_marginEnd="131dp"
+        android:layout_marginBottom="41dp"
+        android:text="사용 가능한 해제 시간:"
+        android:textColor="#db685b"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/everytime"
+        app:layout_constraintEnd_toStartOf="@+id/textRemain"
+        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stop"
+        app:layout_constraintVertical_bias="0.464" />
+
+    <TextView
+        android:id="@+id/txtContents"
+        android:layout_width="349dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginBottom="481dp"
+        android:text="등록된 미션이 없습니다."
+        android:textAlignment="center"
+        android:textColor="#db685b"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:textStyle="bold"
+        android:layout_width="91dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="310dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="439dp"
+        android:text="분"
+        android:textColor="#db685b"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/txtTime"
+        android:textStyle="bold"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView2"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="229dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="438dp"
+        android:text="10"
+        android:textColor="#db685b"
+        android:textSize="24sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/MathGame"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:text="수학 게임" />
+
+        <Button
+            android:id="@+id/btnUpload"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:text="확 인" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textRemain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txtRemain2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="296dp"
+        android:layout_marginTop="537dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="711dp"
+        android:textColor="#db685b"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="29dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txtRemain2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="357dp"
+        android:layout_marginTop="538dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="711dp"
+        android:text="분"
+        android:textColor="#db685b"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

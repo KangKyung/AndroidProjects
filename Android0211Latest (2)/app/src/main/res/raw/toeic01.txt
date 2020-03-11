@@ -1,0 +1,10 @@
+﻿1	:	주소,연설	:	address	:	recent	:	dish	:	fish	:	1	:	*address주소,연설 *recent최근의	:	*dish접시,요리 *fish물고기	:	0
+2	:	무서워하여, 두려워하여	:	afraid	:	credit	:	glass	:	smart	:	1	:	*afraid무서워하여,두려워하여 *credit신용, 신뢰하다, 외상	:	*glass유리잔, 유리 *smart똑똑한,영재	:	0
+3	:	~뒤에, ~다음에	:	math	:	english	:	character	:	after:	4	:	*math수학 *english영어	:	*character성격,인물,글자 *after~뒤에, ~다음에	:	0
+4	:	오후	:	direction	:	afternoon	:	help	:	danger:	2	:	*direction방향, (~s) 명령 *afternoon오후	:	*help돕다 *danger위험한	:	0
+5	:	또, 다시 한 번	:	weight	:	wait	:	sea	:	again	:	4	:	*weight무게 *wait기다리다	:	*sea바다 *again또, 다시 한 번	:	0
+6	:	잔디	:	decide	:	bar	:	grass	:	steal	:	3	:	*decide결정하다 *bar막대, 빗장, 술집	:	*grass잔디 *steal훔치다	:	0
+7	:	항목, 물건	:	army	:	ceiling	:	item	:	phone	:	3	:	*army육군, 군대 *ceiling천장	:	*severe심(각)한, 엄한 *phone전화기	:	0
+8	:	규칙,지배(하다)	:	follow	:	rule	:	end	:	start	:	2	:	*follow따르다 *rule규칙,지배(하다)	:	*end끝내다 *start시작(하다)	:	0
+9	:	가득 찬	:	law	:	raw	:	sign	:	full	:	4	:	*law법률 *raw날것의	:	*sign서명 *full가득 찬	:	0
+10	:	아픈	:	produce	:	mouse	:	single	:	pain	:	4	:	*produce생산하다 *mouse쥐	:	*single단 하나의, 독신의 *pain아픈	:	0
